@@ -3,8 +3,9 @@ package likelion13.page.controller.admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import likelion13.page.DTO.ClubDTO.*;
+import likelion13.page.DTO.ClubDTO.ClubCreateRequest;
 import likelion13.page.DTO.ClubDTO.ClubUpdateRequest;
+import likelion13.page.DTO.ClubDTO.ClubUpdateResponse;
 import likelion13.page.DTO.ClubDTO.RequestJoinClub;
 import likelion13.page.domain.Club;
 import likelion13.page.service.ClubService;
@@ -14,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static likelion13.page.DTO.ClubDTO.ClubAllRequest;
 
 
 @RestController

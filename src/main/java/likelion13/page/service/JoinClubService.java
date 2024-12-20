@@ -1,12 +1,11 @@
 package likelion13.page.service;
 
-import likelion13.page.DTO.JoinClubDTO;
-import likelion13.page.DTO.MemberClubDTO.*;
+import likelion13.page.DTO.MemberClubDTO.MemberJoinedClubDTO;
+import likelion13.page.DTO.MemberClubDTO.MemberJoinedUnjoinedClubDTO;
 import likelion13.page.domain.Club;
 import likelion13.page.domain.JoinClub;
 import likelion13.page.domain.Member;
 import likelion13.page.exception.ExistJoinClubException;
-import likelion13.page.exception.NoJoinedClubException;
 import likelion13.page.exception.NotExistJoinClubException;
 import likelion13.page.repository.JoinClubRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static likelion13.page.DTO.JoinClubDTO.*;
+import static likelion13.page.DTO.JoinClubDTO.CreateJC;
 
 @Service
 @RequiredArgsConstructor

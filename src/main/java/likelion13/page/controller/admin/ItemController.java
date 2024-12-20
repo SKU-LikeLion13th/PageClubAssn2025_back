@@ -2,16 +2,16 @@ package likelion13.page.controller.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import likelion13.page.DTO.ItemDTO;
-import likelion13.page.DTO.ItemDTO.*;
+import likelion13.page.DTO.ItemDTO.ItemAllRequestExceptImage;
+import likelion13.page.DTO.ItemDTO.ItemCreateRequest;
 import likelion13.page.DTO.ItemDTO.ItemCreateResponse;
+import likelion13.page.DTO.ItemDTO.ItemUpdateRequest;
 import likelion13.page.domain.Item;
 import likelion13.page.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;

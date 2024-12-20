@@ -1,7 +1,5 @@
 package likelion13.page.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,15 +8,12 @@ import likelion13.page.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -32,9 +27,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 //        System.out.println("1");
         String path = request.getRequestURI();
-        if (path.equals("/login")) {
+//        if (path.equals("/login") || path.startsWith("/swagger") || path.startsWith("/v3/api-docs")) {
+//            filterChain.doFilter(request, response);
+////            System.out.println("2");
+//            return;
+//        }
+        if (!path.startsWith("/admin") && !path.startsWith("/item-rent")) {
+            // 경로가 /admin/** 또는 /item-rent/**가 아닌 경우, 필터를 통과시킴
             filterChain.doFilter(request, response);
-//            System.out.println("2");
             return;
         }
 

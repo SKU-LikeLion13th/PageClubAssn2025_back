@@ -1,21 +1,20 @@
 package likelion13.page.repository;
 
 import jakarta.persistence.EntityManager;
-import likelion13.page.DTO.JoinClubDTO;
-import likelion13.page.DTO.MemberClubDTO.*;
+import likelion13.page.DTO.MemberClubDTO.MemberJoinedClubDTO;
+import likelion13.page.DTO.MemberClubDTO.MemberJoinedUnjoinedClubDTO;
 import likelion13.page.domain.Club;
 import likelion13.page.domain.JoinClub;
 import likelion13.page.domain.Member;
 import likelion13.page.exception.MemberLoginException;
 import likelion13.page.exception.NotExistJoinClubException;
-import likelion13.page.exception.NotExistJoinEventException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static likelion13.page.DTO.JoinClubDTO.*;
+import static likelion13.page.DTO.JoinClubDTO.CreateJC;
 
 @Repository
 @RequiredArgsConstructor

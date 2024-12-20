@@ -3,21 +3,14 @@ package likelion13.page.controller.admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import likelion13.page.DTO.EventDTO.*;
-//import likelion13.page.DTO.EventDTO.UpdateRequestEvent;
-//import likelion13.page.DTO.EventDTO.DeleteEvents;
-//import likelion13.page.DTO.EventDTO.EventAllRequestExceptImage;
-//import likelion13.page.DTO.EventDTO.RequestEvent;
-//import likelion13.page.DTO.EventDTO.ResponseEvent;
 import likelion13.page.domain.Event;
 import likelion13.page.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

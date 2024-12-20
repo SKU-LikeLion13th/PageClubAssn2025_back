@@ -1,11 +1,10 @@
 package likelion13.page.controller.admin;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import likelion13.page.DTO.JoinEventDTO.*;
-import likelion13.page.DTO.JoinClubDTO.*;
-import likelion13.page.DTO.MemberClubDTO.*;
+import likelion13.page.DTO.JoinEventDTO.RequestMemberId;
+import likelion13.page.DTO.MemberClubDTO.MemberJoinedClubDTO;
+import likelion13.page.DTO.MemberClubDTO.MemberJoinedUnjoinedClubDTO;
 import likelion13.page.service.JoinClubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

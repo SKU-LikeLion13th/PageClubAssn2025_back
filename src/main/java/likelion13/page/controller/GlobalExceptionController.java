@@ -1,6 +1,5 @@
 package likelion13.page.controller;
 
-import likelion13.page.exception.*;
 import likelion13.page.exception.HavePenaltyException;
 import likelion13.page.exception.LimitRentException;
 import likelion13.page.exception.MessageException;

@@ -4,14 +4,13 @@ import jakarta.persistence.EntityManager;
 import likelion13.page.domain.Event;
 import likelion13.page.domain.Member;
 import likelion13.page.exception.CustomEventException;
-import likelion13.page.exception.MemberLoginException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static likelion13.page.DTO.EventDTO.*;
+import static likelion13.page.DTO.EventDTO.EventAllRequestExceptImage;
 
 @Repository
 @RequiredArgsConstructor

@@ -1,7 +1,6 @@
 package likelion13.page.domain;
 
 import jakarta.persistence.*;
-import likelion13.page.service.ImageUtility;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;

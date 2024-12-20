@@ -1,6 +1,6 @@
 package likelion13.page.service;
 
-import likelion13.page.DTO.ItemDTO.*;
+import likelion13.page.DTO.ItemDTO.ItemAllRequestExceptImage;
 import likelion13.page.domain.Item;
 import likelion13.page.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;

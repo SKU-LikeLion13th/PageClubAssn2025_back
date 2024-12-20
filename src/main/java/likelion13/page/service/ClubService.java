@@ -1,7 +1,6 @@
 package likelion13.page.service;
 
 import likelion13.page.domain.Club;
-import likelion13.page.domain.Event;
 import likelion13.page.repository.ClubRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,9 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import java.util.List;
 
 @Service

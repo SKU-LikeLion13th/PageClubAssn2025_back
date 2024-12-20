@@ -2,8 +2,8 @@ package likelion13.page.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import likelion13.page.DTO.MemberDTO;
+import likelion13.page.DTO.MemberDTO.MemberInfo;
 import likelion13.page.domain.Member;
-import likelion13.page.DTO.MemberDTO.*;
 import likelion13.page.domain.RoleType;
 import likelion13.page.exception.MemberExistException;
 import likelion13.page.exception.MemberLoginException;

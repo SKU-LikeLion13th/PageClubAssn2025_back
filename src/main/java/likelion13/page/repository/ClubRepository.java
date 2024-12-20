@@ -1,10 +1,7 @@
 package likelion13.page.repository;
 
 import jakarta.persistence.EntityManager;
-import likelion13.page.DTO.ClubDTO;
-import likelion13.page.DTO.ClubDTO.*;
 import likelion13.page.domain.Club;
-import likelion13.page.exception.MemberLoginException;
 import likelion13.page.exception.NotExistClubException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

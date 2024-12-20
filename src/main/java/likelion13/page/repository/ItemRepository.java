@@ -1,8 +1,7 @@
 package likelion13.page.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import likelion13.page.DTO.ItemDTO.*;
+import likelion13.page.DTO.ItemDTO.ItemAllRequestExceptImage;
 import likelion13.page.domain.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

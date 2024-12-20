@@ -1,8 +1,8 @@
 package likelion13.page.service;
 
-import likelion13.page.DTO.EventDTO.*;
-import likelion13.page.DTO.JoinEventDTO.*;
-import likelion13.page.DTO.JoinEventDTO;
+import likelion13.page.DTO.EventDTO.AllEvents;
+import likelion13.page.DTO.EventDTO.ResponsePuzzleForNotPart;
+import likelion13.page.DTO.JoinEventDTO.ResponseJoinEvent;
 import likelion13.page.domain.Event;
 import likelion13.page.domain.JoinEvent;
 import likelion13.page.domain.Member;
