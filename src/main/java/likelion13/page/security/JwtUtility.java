@@ -1,20 +1,28 @@
 package likelion13.page.security;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
 
 @Service
 public class JwtUtility {
 
-    @Value("${jwt.key}")
-    private String secret = "askqwhrkjweagfjasdfasfdahsjkfhqlwkjfhbasdjkfhlqwkjefhbadskjfbalsdhfvbasdfasdfasdfasdfasdqmjhfvgjasd";
+//    @Value("${jwt.key}")
+//    private String secret = "askqwhrkjweagfjasdfasfdahsjkfhqlwkjfhbasdjkfhlqwkjefhbadskjfbalsdhfvbasdfasdfasdfasdfasdqmjhfvgjasd";
+
+    private final Key secret;
 
     private static final long expirationTime = 1000 * 60 * 60; // 1시간
+
+    public JwtUtility() {
+        this.secret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    }
 
     // JWT 생성
     public String generateToken(String memberId) {
@@ -22,7 +30,7 @@ public class JwtUtility {
                 .setSubject(memberId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS512, secret.getBytes(StandardCharsets.UTF_8))
+                .signWith(secret)
                 .compact();
     }
 
@@ -30,7 +38,7 @@ public class JwtUtility {
     public String getStudentId(String token) {
         // 토큰 파싱 및 클레임 반환
         return Jwts.parser()
-                .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
+                .setSigningKey(secret)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -40,7 +48,7 @@ public class JwtUtility {
     // JWT 유효성 검증
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
+            Jwts.parser().setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token);
             return true;
