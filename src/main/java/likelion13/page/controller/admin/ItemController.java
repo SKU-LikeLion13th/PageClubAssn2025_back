@@ -29,7 +29,7 @@ public class ItemController {
     @PostMapping("") //, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addItem(ItemCreateRequest reqest)  throws IOException {
 
-        Item item = itemService.save(reqest.getName(), reqest.getCount(), reqest.getImage());
+        itemService.save(reqest.getName(), reqest.getCount(), reqest.getImage());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
