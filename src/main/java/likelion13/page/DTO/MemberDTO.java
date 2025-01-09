@@ -110,4 +110,10 @@ public class MemberDTO {
         @Schema(description = "바꿀 동아리명", example = "멋쟁이사자처럼")
         private String clubName;
     }
+
+    @Data
+    public static class RequestMemberId {
+        @Schema(description = "조회학번", example = "00000000")
+        private String studentId;
+    }
 }
