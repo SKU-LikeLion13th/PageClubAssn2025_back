@@ -17,7 +17,7 @@ public class ItemDTO {
         private String name;
 
         @NotEmpty
-        @Schema(description = "물품 총개수", example = "14")
+        @Schema(description = "물품 총수량", example = "14")
         private int count;
 
         @NotEmpty
@@ -32,7 +32,7 @@ public class ItemDTO {
         @Schema(description = "물품명", example = "방석")
         private String name;
 
-        @Schema(description = "물품 총개수", example = "13")
+        @Schema(description = "물품 총수량", example = "13")
         private int count;
 
         @NotEmpty
@@ -49,7 +49,7 @@ public class ItemDTO {
         @Schema(description = "물품명", example = "방석")
         private String name;
 
-        @Schema(description = "물품 총개수", example = "13")
+        @Schema(description = "물품 총수량", example = "13")
         private Integer count;
 
         @Nullable
