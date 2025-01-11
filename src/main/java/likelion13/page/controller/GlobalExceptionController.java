@@ -1,9 +1,6 @@
 package likelion13.page.controller;
 
-import likelion13.page.exception.HavePenaltyException;
-import likelion13.page.exception.LimitRentException;
-import likelion13.page.exception.MessageException;
-import likelion13.page.exception.NotEnoughItemException;
+import likelion13.page.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,9 +8,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionController {
-    @ExceptionHandler(HavePenaltyException.class)
-    public ResponseEntity<String> havePenalty(Exception e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("반납 지연으로 인해 대여가 제한됩니다.");
+    @ExceptionHandler(DelayedReturnException.class)
+    public ResponseEntity<String> delayedReturn(Exception e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("반납 3회 지연으로 대여 서비스가 제한되었습니다.");
+    }
+
+    @ExceptionHandler(NotReturnException.class)
+    public ResponseEntity<String> notReturn(Exception e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("미반납 1회로 대여 서비스가 제한되었습니다.");
     }
 
     @ExceptionHandler(LimitRentException.class)
