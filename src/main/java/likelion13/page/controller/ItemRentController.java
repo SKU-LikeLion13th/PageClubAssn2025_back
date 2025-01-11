@@ -30,9 +30,10 @@ public class ItemRentController {
         return ResponseEntity.ok(itemRentService.getrestItemList());
     }
 
-    @Operation(summary = "(민지) 물품 대여 예약", description = "토큰, 물품번호, 대여시도 개수 필요",
+    @Operation(summary = "(민규) 물품 대여 예약", description = "토큰, 물품번호, 대여시도 개수 필요",
             responses = {@ApiResponse(responseCode = "200", description = "대여 성공"),
-                    @ApiResponse(responseCode = "403", description = "대여 실패")
+                    @ApiResponse(responseCode = "403", description = "반납 3회이상"),
+                    @ApiResponse(responseCode = "403", description = "미반납 1회이상")
             })
     @PostMapping("")
     public ResponseEntity<BookDTO> bookRequest(HttpServletRequest header, @RequestBody BookRequestDTO request) {
@@ -51,8 +52,8 @@ public class ItemRentController {
 
     @Operation(summary = "(민지) 특정 멤버가 예약중인 물품 리스트", description = "헤더에 토큰 필요")
     @GetMapping("/book-list")
-    public ResponseEntity<List<BookDTO>> memberBookList(HttpServletRequest header){
-        List<BookDTO> list = itemRentService.memberBookList(jwtUtility.getStudentId(jwtUtility.resolveToken(header)));
+    public ResponseEntity<List<ReservedDTO>> memberBookList(HttpServletRequest header){
+        List<ReservedDTO> list = itemRentService.memberBookList(jwtUtility.getStudentId(jwtUtility.resolveToken(header)));
         return ResponseEntity.ok().body(list);
     }
 

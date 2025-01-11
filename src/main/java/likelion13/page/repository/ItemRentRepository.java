@@ -109,7 +109,7 @@ public class ItemRentRepository {
     }
 
     public List<AdminRentListDTO> findRentWithoutImage(){
-        return em.createQuery("select new AdminRentListDTO(ir.id, ir.renter.studentId, ir.renter.name, ir.item.name, ir.renterClub, ir.count, ir.receiveDate) " +
+        return em.createQuery("select new AdminRentListDTO(ir.id, ir.renter.studentId, ir.renter.name, ir.item.name, ir.renterClub, ir.count, ir.receiveDate, ir.returnDeadLine) " +
                         "from ItemRent ir where ir.status = :status", AdminRentListDTO.class)
                 .setParameter("status", RentStatus.RENT)
                 .getResultList();
