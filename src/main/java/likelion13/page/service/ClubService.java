@@ -18,9 +18,9 @@ public class ClubService {
 
     // 동아리 추가
     @Transactional
-    public Club addNewClub(String clubName, String description, MultipartFile logo) throws IOException {
+    public Club addNewClub(String clubName, MultipartFile logo) throws IOException {
         byte[] imageBytes = logo.getBytes();
-        Club club = new Club(clubName, description, imageBytes);
+        Club club = new Club(clubName, imageBytes);
         return clubRepository.addNewClub(club);
     }
 
@@ -39,13 +39,13 @@ public class ClubService {
 
     // 동아리 삭제
     @Transactional
-    public boolean deleteClub(String clubName) {
-        Club club = clubRepository.findByName(clubName);
+    public boolean deleteClub(Long id) {
+        Club club = clubRepository.findById(id);
         return clubRepository.deleteClub(club);
     }
 
     @Transactional
-    public Club changeClub(Long id, String clubName, String description, MultipartFile logo) throws IOException {
+    public Club changeClub(Long id, String clubName, MultipartFile logo) throws IOException {
         Club club = findById(id);
         System.out.println("logo = " + logo);
 
@@ -53,8 +53,7 @@ public class ClubService {
             club.setLogo(logo);
         }
         String newClubName = (clubName != null ? clubName : club.getName());
-        String newDescription = (description != null ? description : club.getDescription());
-        club.changeClub(newClubName, newDescription);
+        club.changeClub(newClubName);
 
         return club;
     }
