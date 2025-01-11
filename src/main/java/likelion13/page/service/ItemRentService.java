@@ -106,12 +106,12 @@ public class ItemRentService {
         return true;
     }
 
-    public List<BookDTO> memberBookList(String studentId){
+    public List<ReservedDTO> memberBookList(String studentId){
         Member member = memberService.findByStudentId(studentId);
         LocalDateTime beforeBuzTime = dateCheckService.beforeBuzDay(ItemRent.getNow().toLocalDate()).atStartOfDay();
         List<ItemRent> bookList = itemRentRepository.findBookWithMember(member, beforeBuzTime);
         return bookList.stream()
-                .map(itemRent -> new BookDTO(itemRent, dateCheckService.needReceiveDate(itemRent.getOfferDate())))
+                .map(itemRent -> new ReservedDTO(itemRent, dateCheckService.needReceiveDate(itemRent.getOfferDate())))
                 .toList();
     }
 

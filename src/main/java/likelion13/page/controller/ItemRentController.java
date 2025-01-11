@@ -51,8 +51,8 @@ public class ItemRentController {
 
     @Operation(summary = "(민지) 특정 멤버가 예약중인 물품 리스트", description = "헤더에 토큰 필요")
     @GetMapping("/book-list")
-    public ResponseEntity<List<BookDTO>> memberBookList(HttpServletRequest header){
-        List<BookDTO> list = itemRentService.memberBookList(jwtUtility.getStudentId(jwtUtility.resolveToken(header)));
+    public ResponseEntity<List<ReservedDTO>> memberBookList(HttpServletRequest header){
+        List<ReservedDTO> list = itemRentService.memberBookList(jwtUtility.getStudentId(jwtUtility.resolveToken(header)));
         return ResponseEntity.ok().body(list);
     }
 

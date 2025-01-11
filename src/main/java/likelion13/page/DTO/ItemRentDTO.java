@@ -59,6 +59,36 @@ public class ItemRentDTO {
     }
 
     @Data
+    public static class ReservedDTO {
+        @Schema(description = "대여번호", example = "1")
+        private Long itemRentId;
+
+        @Schema(description = "예약자 학번", example = "00000000")
+        private String studentId;
+
+        @Schema(description = "물품명", example = "방석")
+        private String itemName;
+
+        @Schema(description = "물품 이미지")
+        private String image;
+
+        @Schema(description = "예약 개수", example = "2")
+        private Integer count;
+
+        @Schema(description = "요구 수령시간", example = "2024-04-01T17:30:00", type = "string")
+        private LocalDateTime needReceiveTime;
+
+        public ReservedDTO(ItemRent itemRent, LocalDateTime needReceiveTime){
+            this.itemRentId = itemRent.getId();
+            this.studentId = itemRent.getRenter().getStudentId();
+            this.itemName = itemRent.getItem().getName();
+            this.image = ImageUtility.encodeImage(itemRent.getItem().getImage());
+            this.count = itemRent.getCount();
+            this.needReceiveTime = needReceiveTime;
+        }
+    }
+
+    @Data
     public static class RentDTO {
         @Schema(description = "물품대여번호", example = "1")
         private Long itemRentId;
