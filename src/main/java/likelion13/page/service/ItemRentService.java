@@ -4,10 +4,7 @@ import likelion13.page.domain.Item;
 import likelion13.page.domain.ItemRent;
 import likelion13.page.domain.Member;
 import likelion13.page.domain.RentStatus;
-import likelion13.page.exception.HavePenaltyException;
-import likelion13.page.exception.LimitRentException;
-import likelion13.page.exception.MessageException;
-import likelion13.page.exception.NotEnoughItemException;
+import likelion13.page.exception.*;
 import likelion13.page.repository.ItemRentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,9 +38,7 @@ public class ItemRentService {
         Member renter = memberService.findByStudentId(studentId);
         Item item = itemService.findById(itemId);
 
-        if(isPenalty(studentId)){
-            throw new HavePenaltyException();
-        }
+        isPenalty(studentId);
 
         MemberRentingSize memberRentingSize = checkMemberRenting(studentId);
         memberRentingSize.variety.add(itemId);
@@ -143,7 +138,7 @@ public class ItemRentService {
 //
 //    }
 
-    public boolean isPenalty(String studentId){
+    public void isPenalty(String studentId){
         Member member = memberService.findByStudentId(studentId);
         int delay = 0;
         int longDelay = 0;
@@ -155,7 +150,14 @@ public class ItemRentService {
                 longDelay++;
             }
         }
-        return delay >= 3 || longDelay >= 1;
+
+        if (longDelay >= 1) {
+            throw new NotReturnException();
+        }
+
+        if (delay >= 3) {
+            throw new DelayedReturnException();
+        }
     }
 
     public MemberRentingSize checkMemberRenting(String studentId) {
