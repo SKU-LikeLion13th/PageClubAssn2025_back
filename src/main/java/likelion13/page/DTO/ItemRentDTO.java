@@ -146,10 +146,13 @@ public class ItemRentDTO {
         @Schema(description = "대여 시간(수령시간)", example = "2024-03-31T00:04:43.982361", type = "string")
         private LocalDateTime rentTime;
 
+        @Schema(description = "반납 마감일", example = "2024-03-31T00:04:43.982361", type = "string")
+        private LocalDateTime returnDeadLine;
+
         @Schema(description = "지연여부", example = "NO_DELAY or DELAY or LONG_DELAY")
         private DelayStatus status;
 
-        public AdminRentListDTO(Long itemRentId, String studentId, String name, String itemName, String iconClub, Integer count, LocalDateTime rentTime) {
+        public AdminRentListDTO(Long itemRentId, String studentId, String name, String itemName, String iconClub, Integer count, LocalDateTime rentTime, LocalDateTime returnDeadLine) {
             this.itemRentId = itemRentId;
             this.studentId = studentId;
             this.itemName = itemName;
@@ -157,6 +160,7 @@ public class ItemRentDTO {
             this.iconClub = iconClub;
             this.count = count;
             this.rentTime = rentTime;
+            this.returnDeadLine = returnDeadLine;
         }
     }
 
