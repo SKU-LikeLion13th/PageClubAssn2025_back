@@ -66,6 +66,7 @@ public class ItemRentService {
     public ReceiveDTO receiveItem(long itemRentId){
         ItemRent itemRent = findById(itemRentId);
         itemRent.itemReceive(ItemRent.getNow());
+        itemRent.setReturnDeadLine(dateCheckService.needReturnDate(ItemRent.getNow()));
         return new ReceiveDTO(itemRent,dateCheckService.needReturnDate(itemRent.getReceiveDate()));
     }
 
