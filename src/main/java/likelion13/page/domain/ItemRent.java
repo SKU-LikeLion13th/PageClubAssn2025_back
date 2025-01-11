@@ -4,6 +4,7 @@ package likelion13.page.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -29,6 +30,10 @@ public class ItemRent {
     private LocalDateTime receiveDate;
     @Column(name = "rent_return_date")
     private LocalDateTime returnDate;
+
+    @Setter
+    @Column(name = "rent_return_deadline")
+    private LocalDateTime returnDeadLine;
 
     @Enumerated(EnumType.STRING)
     private RentStatus status;
