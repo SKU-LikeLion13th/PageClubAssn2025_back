@@ -55,9 +55,9 @@ public class JoinClubService {
 
     // 동아리에서 학생 탈퇴
     @Transactional
-    public void deleteJoinClub(String studentId, String clubName) {
+    public void deleteJoinClub(String studentId, Long clubId) {
         Member member = memberService.findByStudentId(studentId);
-        Club club = clubService.findByName(clubName);
+        Club club = clubService.findById(clubId);
 
         if (member.getIconClub()!=null && member.getIconClub().equals(club)) {
             member.setIconClub(null);
