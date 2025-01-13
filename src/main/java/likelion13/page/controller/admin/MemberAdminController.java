@@ -10,6 +10,7 @@ import likelion13.page.domain.Member;
 import likelion13.page.service.ExcelReaderService;
 import likelion13.page.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,11 +54,13 @@ public class MemberAdminController {
         return ResponseEntity.ok().body(memberService.findByKeyword(keyword));
     }
 
+    @Operation(summary = "(민규) Excel(.xlsx) 파일로 동아리원 추가", description = "Excel",
+            responses = {@ApiResponse(responseCode = "201", description = "등록 성공")})
     @PostMapping("/excel/upload")
-    public List<Map<String, Object>> uploadExcel(MultipartFile file) {
+    public ResponseEntity<List<Map<String, Object>>> uploadExcel(MultipartFile file) {
         try {
             // Excel 파일을 읽어 데이터를 반환
-            return ExcelReaderService.readExcel(file);
+            return ResponseEntity.status(HttpStatus.CREATED).body(ExcelReaderService.readExcel(file));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
