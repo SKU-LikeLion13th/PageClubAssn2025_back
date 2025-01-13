@@ -15,26 +15,28 @@ import java.util.Map;
 public class ExcelReaderService {
 
     public static List<Map<String, Object>> readExcel(MultipartFile file) throws IOException {
-        List<Map<String, Object>> result = new ArrayList<>();
-        InputStream inputStream = file.getInputStream();
-        Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet sheet = workbook.getSheetAt(0);
+        List<Map<String, Object>> result = new ArrayList<>(); // 데이터 저장
+        InputStream inputStream = file.getInputStream(); // 파일의 입력 스트림 가져오기
+        Workbook workbook = new XSSFWorkbook(inputStream); // 확장자가 .xlsx인 파일을 읽어 workbook 객체 생성
+        Sheet sheet = workbook.getSheetAt(0); // 첫번째 시트 가져오기
 
-        for (int startRow = 3; startRow <= sheet.getLastRowNum(); startRow += 31) {
-            String clubName = getMergedCellValue(sheet, startRow, 1);
+        // 블록 단위로 데이터 읽는 루프
+        for (int startRow = 3; startRow <= sheet.getLastRowNum(); startRow += 31) { // 3행부터 시작, 매 31행마다 새로운 데이터 블록이 존재함
+            String clubName = getMergedCellValue(sheet, startRow, 1); // 병합된 셀에서 동아리명 읽어옴, 동아리명은 인덱스 기준으로 1, 즉 B열에 있음
 
-            for (int rowIndex = startRow; rowIndex < startRow + 30 && rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-                // Skip the header row (e.g., 34, 65, ...)
-                if ((rowIndex - 3) % 31 == 30) continue;
+            // 열 그룹별(학번-이름)로 데이터 읽는 루프
+            for (int columnGroup = 3; columnGroup <= 9; columnGroup += 3) { // 열 그룹(학번-이름): D-E, G-H, J-K
+                // 행 단위로 데이터 읽는 루프
+                for (int rowIndex = startRow; rowIndex < startRow + 30 && rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 
-                Row row = sheet.getRow(rowIndex);
-                if (row == null) continue;
+                    // 빈 행 처리 안 함
+                    Row row = sheet.getRow(rowIndex);
+                    if (row == null) continue; // 빈 행 처리 안 함
 
-                for (int columnGroup = 3; columnGroup <= 9; columnGroup += 3) {
-                    String studentId = getCellValue(row.getCell(columnGroup));
-                    String studentName = getCellValue(row.getCell(columnGroup + 1));
+                    String studentId = getCellValue(row.getCell(columnGroup)); // 학번 추출 (D, G, J열)
+                    String studentName = getCellValue(row.getCell(columnGroup + 1)); // 이름 추출 (E, H, K열)
 
-                    if (!studentId.isEmpty() && !studentName.isEmpty()) {
+                    if (!studentId.isEmpty() && !studentName.isEmpty()) { // 학번과 이름이 비어 있지 않은 경우만 처리
                         Map<String, Object> rowData = new HashMap<>();
                         rowData.put("clubName", clubName);
                         rowData.put("studentId", studentId);
@@ -49,10 +51,11 @@ public class ExcelReaderService {
         return result;
     }
 
+    // 병합된 셀 값 가져오기
     private static String getMergedCellValue(Sheet sheet, int row, int column) {
-        for (int i = 0; i < sheet.getNumMergedRegions(); i++) {
+        for (int i = 0; i < sheet.getNumMergedRegions(); i++) { // 병합된 영역 탐색
             CellRangeAddress region = sheet.getMergedRegion(i);
-            if (region.isInRange(row, column)) {
+            if (region.isInRange(row, column)) { // 특정 셀이 병합된 영역 안에 있는지 확인
                 Row mergedRow = sheet.getRow(region.getFirstRow());
                 Cell mergedCell = mergedRow.getCell(region.getFirstColumn());
                 return getCellValue(mergedCell);
@@ -61,19 +64,13 @@ public class ExcelReaderService {
         return "";
     }
 
+    // 셀 값 읽기
     private static String getCellValue(Cell cell) {
-        if (cell == null) return "";
-        switch (cell.getCellType()) {
-            case STRING:
-                return cell.getStringCellValue().trim();
-            case NUMERIC:
-                return String.valueOf((long) cell.getNumericCellValue());
-            case BOOLEAN:
-                return String.valueOf(cell.getBooleanCellValue());
-            case FORMULA:
-                return cell.getCellFormula();
-            default:
-                return "";
-        }
+        if (cell == null) return ""; // 셀이 비었으면 빈 문자열 반환
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue().trim();
+            case NUMERIC -> String.valueOf((long) cell.getNumericCellValue()); // 숫자를 long으로 변환 후 String으로 변환
+            default -> "";
+        };
     }
 }
