@@ -25,21 +25,19 @@ public class ClubDTO {
 
     @Data
     public static class RequestJoinClub {
-        @Schema(description = "동아리 이름", example = "멋쟁이사자처럼")
-        private String clubName;
+        @Schema(description = "동아리 id", example = "1")
+        private Long id;
     }
 
     @Data
     public static class ResponseClub {
         private Long id;
         private String name;
-        private String description;
         private String logo;
 
-        public ResponseClub(Long id, String name, String description, String logo) {
+        public ResponseClub(Long id, String name, String logo) {
             this.id = id;
             this.name = name;
-            this.description = description;
             this.logo = logo;
         }
     }
@@ -50,9 +48,6 @@ public class ClubDTO {
         @NotEmpty
         @Schema(description = "동아리 이름", example = "멋쟁이사자처럼")
         private String clubName;
-        @NotEmpty
-        @Schema(description = "동아리 설명", example = "국내최대규모 IT창업동아리")
-        private String description;
 
         @Schema(description = "동아리 로고", example = "")
         private MultipartFile logo;
@@ -69,10 +64,6 @@ public class ClubDTO {
         @Schema(description = "동아리 이름", example = "멋쟁이사자처럼")
         private String name;
 
-        @NotEmpty
-        @Schema(description = "동아리 설명", example = "국내최대규모 IT창업동아리")
-        private String description;
-
         @Nullable
         @Schema(description = "동아리 로고(생략가능)", example = "")
         private MultipartFile logo;
@@ -84,9 +75,6 @@ public class ClubDTO {
         @Schema(description = "동아리 이름", example = "멋쟁이사자처럼")
         private String name;
 
-        @Schema(description = "동아리 설명", example = "국내최대규모 IT창업동아리")
-        private String description;
-
         @Schema(description = "동아리 로고", example = "")
         private String logo;
     }
@@ -96,8 +84,5 @@ public class ClubDTO {
     public static class ClubAllRequest {
         @Schema(description = "동아리 이름", example = "멋쟁이사자처럼")
         private String name;
-
-        @Schema(description = "동아리 설명", example = "국내최대규모 IT창업동아리")
-        private String description;
     }
 }

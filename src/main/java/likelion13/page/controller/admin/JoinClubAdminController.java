@@ -38,10 +38,10 @@ public class JoinClubAdminController {
 //        }
     }
 
-    @Operation(summary = "(민규) 동아리원 삭제", description = "학번, 동아리 이름 필요")
+    @Operation(summary = "(민규) 동아리원 삭제", description = "학번, 동아리 id 필요")
     @DeleteMapping("")
     public void deleteClubMember(@RequestBody DeleteJC request) {
-        joinClubService.deleteJoinClub(request.getMemberId(), request.getClubName());
+        joinClubService.deleteJoinClub(request.getMemberId(), request.getClubId());
     }
 
     @Operation(summary = "(민규) 동아리원 검색", description = "학번, 이름, 동아리를 검색하면 알맞은 동아리원 정보가 나옴")

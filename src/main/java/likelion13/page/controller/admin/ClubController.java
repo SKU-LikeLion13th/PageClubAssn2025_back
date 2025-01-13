@@ -39,23 +39,23 @@ public class ClubController {
 //    }
 
     // 동아리 추가
-    @Operation(summary = "(민규) 동아리 추가", description = "동아리명과 동아리 설명, 로고 사진 필요",
+    @Operation(summary = "(민규) 동아리 추가", description = "동아리명과 로고 사진 필요",
             responses = {@ApiResponse(responseCode = "200", description = "생성"),
                     @ApiResponse(responseCode = "", description = "")})
     @PostMapping("/add") //, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Club> addClub(ClubCreateRequest request)  throws IOException {
-        Club club = clubService.addNewClub(request.getClubName(), request.getDescription(), request.getLogo());
+        Club club = clubService.addNewClub(request.getClubName(), request.getLogo());
         return ResponseEntity.status(HttpStatus.CREATED).body(club);
     }
 
     // 동아리 수정
-    @Operation(summary = "(민규) 동아리 수정", description = "동아리 id, 동아리명, 동아리 설명 필요, 이미지는 안바꾸고 싶으면 안넣으면 됨",
+    @Operation(summary = "(민규) 동아리 수정", description = "동아리 id, 동아리명 필요, 이미지는 안바꾸고 싶으면 안넣으면 됨",
             responses = {@ApiResponse(responseCode = "201", description = "수정 성공 후 변경된 정보를 포함한 객체 생성 "),
                     @ApiResponse(responseCode = "", description = "")})
     @PutMapping("")
     public ResponseEntity<ClubUpdateResponse> changeClub(ClubUpdateRequest request) throws IOException {
-        Club club = clubService.changeClub(request.getId(), request.getName(), request.getDescription(), request.getLogo());
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ClubUpdateResponse(club.getName(), club.getDescription(), club.arrayToImage()));
+        Club club = clubService.changeClub(request.getId(), request.getName(), request.getLogo());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ClubUpdateResponse(club.getName(), club.arrayToImage()));
     }
 
 //    @Operation(summary = "", description = "", tags = {"club"},
@@ -78,10 +78,10 @@ public class ClubController {
         return ResponseEntity.status(HttpStatus.OK).body(clubs);
     }
 
-    @Operation(summary = "동아리 삭제", description = "동아리 이름 넣으면 해당 동아리 삭제",
+    @Operation(summary = "동아리 삭제", description = "동아리 id 넣으면 해당 동아리 삭제",
             responses = {@ApiResponse(responseCode = "200", description = "동아리 삭제 성공.")})
     @DeleteMapping("")
     public boolean deleteClub(@RequestBody RequestJoinClub request) {
-        return clubService.deleteClub(request.getClubName());
+        return clubService.deleteClub(request.getId());
     }
 }
