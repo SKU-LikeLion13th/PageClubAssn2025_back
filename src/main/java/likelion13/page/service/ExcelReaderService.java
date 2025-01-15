@@ -1,8 +1,12 @@
 package likelion13.page.service;
 
+import likelion13.page.domain.RoleType;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -12,10 +16,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ExcelReaderService {
 
-    public static List<Map<String, Object>> readExcel(MultipartFile file) throws IOException {
-        List<Map<String, Object>> result = new ArrayList<>(); // 데이터 저장
+    private final MemberService memberService;
+    private final JoinClubService joinClubService;
+
+    @Transactional
+    public void readExcel(MultipartFile file) throws IOException {
+//        List<Map<String, Object>> result = new ArrayList<>(); // 데이터 저장
         InputStream inputStream = file.getInputStream(); // 파일의 입력 스트림 가져오기
         Workbook workbook = new XSSFWorkbook(inputStream); // 확장자가 .xlsx인 파일을 읽어 workbook 객체 생성
         Sheet sheet = workbook.getSheetAt(0); // 첫번째 시트 가져오기
@@ -26,6 +37,7 @@ public class ExcelReaderService {
 
             // 열 그룹별(학번-이름)로 데이터 읽는 루프
             for (int columnGroup = 3; columnGroup <= 9; columnGroup += 3) { // 열 그룹(학번-이름): D-E, G-H, J-K
+
                 // 행 단위로 데이터 읽는 루프
                 for (int rowIndex = startRow; rowIndex < startRow + 30 && rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 
@@ -37,18 +49,19 @@ public class ExcelReaderService {
                     String studentName = getCellValue(row.getCell(columnGroup + 1)); // 이름 추출 (E, H, K열)
 
                     if (!studentId.isEmpty() && !studentName.isEmpty()) { // 학번과 이름이 비어 있지 않은 경우만 처리 (행 객체는 존재하지만 셀 값이 비어있는 데이터 필터링)
-                        Map<String, Object> rowData = new HashMap<>();
-                        rowData.put("clubName", clubName);
-                        rowData.put("studentId", studentId);
-                        rowData.put("studentName", studentName);
-                        result.add(rowData);
+                        System.out.println(memberService.findByStudentIdWithoutException(studentId));
+                        if (memberService.findByStudentIdWithoutException(studentId) == null) {
+                            memberService.addNewMember(studentId, studentName, RoleType.ROLE_MEMBER);
+//                            joinClubService.saveNewMember(studentId, clubName);
+                        }
+                        joinClubService.saveNewMember(studentId, clubName);
                     }
                 }
             }
         }
 
         workbook.close();
-        return result;
+//        return result;
     }
 
     // 병합된 셀 값 가져오기

@@ -7,6 +7,7 @@ import likelion13.page.domain.Member;
 import likelion13.page.domain.RoleType;
 import likelion13.page.exception.MemberExistException;
 import likelion13.page.exception.MemberLoginException;
+import likelion13.page.repository.MemberInterface;
 import likelion13.page.repository.MemberRepository;
 import likelion13.page.security.JwtUtility;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class MemberService {
     private final ClubService clubService;
     private final MemberRepository memberRepository;
     private final JwtUtility jwtUtility;
+    private final MemberInterface memberInterface;
 
     // 토큰으로 멤버 추출
     public Member tokenToMember(HttpServletRequest request) {
@@ -90,6 +92,10 @@ public class MemberService {
         }
     }
 
+    public Member findByStudentIdWithoutException(String studentId) {
+        return memberRepository.findByStudentId(studentId);
+    }
+
     // 이름으로 조회
     public List<Member> findByName(String name) {
         return memberRepository.findByName(name);
@@ -111,5 +117,7 @@ public class MemberService {
         return memberRepository.findByKeyword(keyword);
     }
 
-
+    public void deleteAllByRole() {
+        memberInterface.deleteAllByRole(RoleType.ROLE_MEMBER);
+    }
 }

@@ -25,6 +25,7 @@ import java.util.Map;
 @Tag(name = "관리자 페이지: 학생 관리 관련")
 public class MemberAdminController {
     private final MemberService memberService;
+    private final ExcelReaderService excelReaderService;
 
     @Operation(summary = "(호주) 새로운 학생 추가", description = "request: 학번, 성함, 권한<br>response: 학번, 성함, 권한",
             responses = {@ApiResponse(responseCode = "201", description = "생성 성공 후 joinClub 객체 반환"),
@@ -57,13 +58,19 @@ public class MemberAdminController {
     @Operation(summary = "(민규) Excel(.xlsx) 파일로 동아리원 추가", description = "Excel",
             responses = {@ApiResponse(responseCode = "201", description = "등록 성공")})
     @PostMapping("/excel/upload")
-    public ResponseEntity<List<Map<String, Object>>> uploadExcel(MultipartFile file) {
+    public ResponseEntity<?> uploadExcel(MultipartFile file) {
         try {
             // Excel 파일을 읽어 데이터를 반환
-            return ResponseEntity.status(HttpStatus.CREATED).body(ExcelReaderService.readExcel(file));
+            excelReaderService.readExcel(file);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @DeleteMapping("/allbyrole")
+    public void deleteAllByRole() {
+        memberService.deleteAllByRole();
     }
 }
