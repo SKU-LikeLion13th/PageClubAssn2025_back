@@ -18,7 +18,7 @@ public class ClubScore {
 
     private String quarter; // 분기
 
-    private int ranking; // 순위
+    private int ranking;
 
     @ManyToOne
     @JoinColumn(name = "club_id")
