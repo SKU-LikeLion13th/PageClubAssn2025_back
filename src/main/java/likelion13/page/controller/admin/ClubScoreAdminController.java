@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import likelion13.page.DTO.ClubScoreDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class ClubScoreAdminController {
     private final ClubScoreService clubScoreService;
 
     // 점수 저장
-    @Operation(summary = "(준범)점수 추가 또는 업데이트",
+    @Operation(summary = "(준범) 점수 추가 또는 업데이트",
             description = "순위를 기준으로 점수를 추가하거나 업데이트.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "정상적으로 저장/업데이트 완료"),
@@ -32,6 +33,6 @@ public class ClubScoreAdminController {
     @PostMapping("/add-or-update")
     public ResponseEntity<Void> saveOrUpdateScores(@RequestBody List<ClubScoreRequestDTO> requestDTO) {
         clubScoreService.saveOrUpdateScores(requestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

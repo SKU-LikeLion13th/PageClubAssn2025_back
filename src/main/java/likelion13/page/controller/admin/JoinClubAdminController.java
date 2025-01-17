@@ -40,8 +40,9 @@ public class JoinClubAdminController {
 
     @Operation(summary = "(민규) 동아리원 삭제", description = "학번, 동아리 id 필요")
     @DeleteMapping("")
-    public void deleteClubMember(@RequestBody DeleteJC request) {
+    public ResponseEntity<?> deleteClubMember(@RequestBody DeleteJC request) {
         joinClubService.deleteJoinClub(request.getMemberId(), request.getClubId());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation(summary = "(민규) 동아리원 검색", description = "학번, 이름, 동아리를 검색하면 알맞은 동아리원 정보가 나옴")
@@ -65,16 +66,16 @@ public class JoinClubAdminController {
 //    }
 
     // 모든 멤버의 가입된 클럽 리스트
-    @Operation(summary = "(택원) 모든 멤버의 가입된 동아리 리스트 반환 API", description = "")
+    @Operation(summary = "모든 멤버의 가입된 동아리 리스트 반환 API", description = "")
     @GetMapping("/all-list")
     public ResponseEntity<List<MemberJoinedClubDTO>> findJoinedClubsForAllMember(){
-        return ResponseEntity.ok().body(joinClubService.findJoinedClubsForAllMember());
+        return ResponseEntity.status(HttpStatus.OK).body(joinClubService.findJoinedClubsForAllMember());
     }
 
     // 특정 멤버의 가입 동아리, 미가입 동아리 리스트
-    @Operation(summary = "(택원) 학생이 가입한 동아리와 가입하지 않은 동아리 반환 API", description = "")
+    @Operation(summary = "학생이 가입한 동아리와 가입하지 않은 동아리 반환 API", description = "")
     @PostMapping("/info")
     public ResponseEntity<MemberJoinedUnjoinedClubDTO> findJoinedClubUnJoinedClub(@RequestBody RequestMemberId request){
-        return ResponseEntity.ok().body(joinClubService.findJoinedClubUnJoinedClub(request.getStudentId()));
+        return ResponseEntity.status(HttpStatus.OK).body(joinClubService.findJoinedClubUnJoinedClub(request.getStudentId()));
     }
 }
