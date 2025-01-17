@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import likelion13.page.DTO.ClubScoreDTO;
 import likelion13.page.service.ClubScoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class ClubScoreController {
 
 
     // 특정 분기의 상위 3개 점수 조회
-    @Operation(summary = "(준범)전체 점수 조회",
+    @Operation(summary = "(준범) 전체 점수 조회",
             description = "순위 기준으로 정렬된 모든 점수를 조회.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "성공적으로 조회됨"),
@@ -32,7 +33,7 @@ public class ClubScoreController {
     @GetMapping("/all")
     public ResponseEntity<List<ClubScoreDTO.ClubScoreResponseDTO>> getAllScores() {
         List<ClubScoreDTO.ClubScoreResponseDTO> responseDTO = clubScoreService.getAllScores();
-        return ResponseEntity.ok(responseDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
 
     }
 }

@@ -117,6 +117,7 @@ public class MemberService {
         return memberRepository.findByKeyword(keyword);
     }
 
+    @Transactional
     public void deleteAllByRole() {
         memberInterface.deleteByRole(RoleType.ROLE_MEMBER);
     }

@@ -45,9 +45,9 @@ public class ClubService {
 
     // 동아리 삭제
     @Transactional
-    public boolean deleteClub(Long id) {
+    public void deleteClub(Long id) {
         Club club = clubRepository.findById(id);
-        return clubRepository.deleteClub(club);
+        clubRepository.deleteClub(club);
     }
 
     @Transactional

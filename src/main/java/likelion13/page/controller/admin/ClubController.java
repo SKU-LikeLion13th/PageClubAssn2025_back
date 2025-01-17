@@ -81,7 +81,8 @@ public class ClubController {
     @Operation(summary = "동아리 삭제", description = "동아리 id 넣으면 해당 동아리 삭제",
             responses = {@ApiResponse(responseCode = "200", description = "동아리 삭제 성공.")})
     @DeleteMapping("")
-    public boolean deleteClub(@RequestBody RequestJoinClub request) {
-        return clubService.deleteClub(request.getId());
+    public ResponseEntity<?> deleteClub(@RequestBody RequestJoinClub request) {
+        clubService.deleteClub(request.getId());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
