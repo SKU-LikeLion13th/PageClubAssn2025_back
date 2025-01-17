@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import likelion13.page.DTO.MemberDTO.changeIconClub;
 import likelion13.page.domain.Club;
 import likelion13.page.security.JwtUtility;
+import likelion13.page.service.ClubService;
 import likelion13.page.service.JoinClubService;
 import likelion13.page.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,6 @@ public class JoinClubController {
     public void changeIconClub(HttpServletRequest header, @RequestBody changeIconClub request){
         String studentId = jwtUtility.getStudentId(jwtUtility.resolveToken(header));
         System.out.println("request = " + request);
-        myPageService.updateIconClub(studentId, request.getClubName());
+        myPageService.updateIconClub(studentId, request.getClubId());
     }
 }

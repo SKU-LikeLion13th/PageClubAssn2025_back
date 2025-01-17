@@ -37,10 +37,10 @@ public class MyPageService {
 
     @Transactional
     // 대표 동아리 변경
-    public Member updateIconClub(String studentId, String clubName) {
+    public Member updateIconClub(String studentId, Long clubId) {
         Member member = memberService.findByStudentId(studentId);
-        Club newIconClub = clubService.findByName(clubName);
-        if(!joinClubService.findJoinClub(studentId, clubName)){
+        Club newIconClub = clubService.findById(clubId);
+        if(!joinClubService.findJoinClub(studentId, clubId)){
             throw new NotExistJoinClubException("해당 동아리에 가입되어있지 않습니다.", HttpStatus.BAD_REQUEST);
         }
         member.updateIconClub(newIconClub);

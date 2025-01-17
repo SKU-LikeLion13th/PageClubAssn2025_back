@@ -107,8 +107,8 @@ public class MemberDTO {
 
     @Data
     public static class changeIconClub {
-        @Schema(description = "바꿀 동아리명", example = "멋쟁이사자처럼")
-        private String clubName;
+        @Schema(description = "바꿀 동아리 Id (주희 수정)", example = "1")
+        private Long clubId;
     }
 
     @Data

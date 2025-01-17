@@ -30,7 +30,7 @@ public class JoinClubService {
     public JoinClub saveNewMember(String studentId, String clubName) {
         Member member = memberService.findByStudentId(studentId);
         Club club = clubService.findByName(clubName);
-        if(findJoinClub(studentId, clubName)) {
+        if(findJoinClub(studentId, club.getId())) {
             throw new ExistJoinClubException("이미 추가된 동아리원입니다.",HttpStatus.NOT_ACCEPTABLE);
         }
         JoinClub joinClub = new JoinClub(club, member);
@@ -68,9 +68,10 @@ public class JoinClubService {
         joinClubRepository.deleteJoinClub(joinClub);
     }
 
-    public boolean findJoinClub(String studentId, String clubName){
+    public boolean findJoinClub(String studentId, Long clubId){
         Member member = memberService.findByStudentId(studentId);
-        Club club = clubService.findByName(clubName);
+
+        Club club = clubService.findById(clubId);
         try{
             joinClubRepository.findJoinClub(club, member);
             return true;
