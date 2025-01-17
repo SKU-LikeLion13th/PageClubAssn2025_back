@@ -118,6 +118,6 @@ public class MemberService {
     }
 
     public void deleteAllByRole() {
-        memberInterface.deleteAllByRole(RoleType.ROLE_MEMBER);
+        memberInterface.deleteByRole(RoleType.ROLE_MEMBER);
     }
 }
