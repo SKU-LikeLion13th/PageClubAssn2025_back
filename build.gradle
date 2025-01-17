@@ -45,6 +45,12 @@ dependencies {
 
 	implementation 'org.json:json:20230227'
 
+	// Apache POI - Excel 파일 읽기 및 쓰기 지원
+	implementation 'org.apache.poi:poi:5.2.3'
+	implementation 'org.apache.poi:poi-ooxml:5.2.3'
+
+	// Apache POI에서 XML 관련 처리를 위한 추가 의존성
+	implementation 'org.apache.commons:commons-collections4:4.4'
 
 }
 
