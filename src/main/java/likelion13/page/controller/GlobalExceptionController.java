@@ -33,6 +33,16 @@ public class GlobalExceptionController {
         return ResponseEntity.status(e.getStatus()).body(e.getMessage());
     }
 
+    @ExceptionHandler(DuplicatedRankingException.class)
+    public ResponseEntity<String> handleDuplicatedRankingException(DuplicatedRankingException e) {
+        return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ClubScoreNotFoundException.class)
+    public ResponseEntity<String> handleClubScoreNotFoundException(ClubScoreNotFoundException e) {
+        return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+    }
+
 //    @ExceptionHandler(MemberExistException.class)
 //    public ResponseEntity<String> alreadyExistMember(MemberExistException e) {
 //        return ResponseEntity.status(e.getStatus()).body(e.getMessage());
