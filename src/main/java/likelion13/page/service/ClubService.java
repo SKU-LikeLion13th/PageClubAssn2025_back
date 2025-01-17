@@ -1,6 +1,7 @@
 package likelion13.page.service;
 
 import likelion13.page.domain.Club;
+import likelion13.page.repository.ClubInterface;
 import likelion13.page.repository.ClubRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ClubService {
     private final ClubRepository clubRepository;
+    private final ClubInterface clubInterface;
 
     // 동아리 추가
     @Transactional
@@ -35,6 +37,10 @@ public class ClubService {
     // 동아리 조회
     public Club findByName(String clubName) {
         return clubRepository.findByName(clubName);
+    }
+
+    public Long findIdByClubName(String clubName) {
+        return clubInterface.findIdByName(clubName);
     }
 
     // 동아리 삭제
