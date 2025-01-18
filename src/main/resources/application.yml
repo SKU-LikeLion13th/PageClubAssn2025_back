@@ -13,13 +13,9 @@ spring:
         format_sql: true
         jdbc:
           time_zone: Asia/Seoul
-#    database-platform:
 
 jwt:
   key: asdsdfjowejglwjgijsdfoijwaeiogjweijgipsoadfjiowfgwlkjsdfkjweioufhwoihfgljksdfiouwe
 
 api-key:
   date-checker: 1Kw49paSD5t9RqepmPwQpD8cNSs0I1SzwQlnt5n62oU6vD5P%2Fxnnp2t3I8PwfAa%2BtFY02jbP6yWFcfiKPMRWqA%3D%3D
-
-#server:
-#  port: 8081
