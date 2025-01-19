@@ -75,11 +75,11 @@ jobs:
         run: |
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
       - name: SCP transfer
-        run: scp -o StrictHostKeyChecking=no *.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/ubuntu/page
+        run: scp -o StrictHostKeyChecking=no cicdsample/*-SNAPSHOT.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/ubuntu/page
       - name: Execute remote commands
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8081/tcp"
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup java -jar ~/cicd/*.jar &"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd /home/ubuntu/page && sudo nohup java -jar *.jar > app.log 2>&1 &"
   dependency-submission:
 
     runs-on: ubuntu-latest
