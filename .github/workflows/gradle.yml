@@ -76,6 +76,16 @@ jobs:
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
       - name: SCP transfer
         run: scp -o StrictHostKeyChecking=no *-SNAPSHOT.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/ubuntu/page
+
+      - name: Kill process using port 8081 (if exists)
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
+            if sudo lsof -i :8081 -sTCP:LISTEN -t; then
+              echo 'Process found, killing it...'
+              sudo fuser -k 8081/tcp
+            else
+              echo 'No process running on port 8081, skipping...'
+            fi"
       - name: Execute remote commands
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8081/tcp"
