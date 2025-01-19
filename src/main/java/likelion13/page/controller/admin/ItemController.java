@@ -35,7 +35,7 @@ public class ItemController {
     }
 
     // 물품 수정(이미지 안바꾸고 싶으면 안넣으면 됨)
-    @Operation(summary = "관리자가 대여 물품 수정하는 API",
+    @Operation(summary = "관리자가 대여 물품 수정하는 API1",
             description = "물품id, 수정하고자하는 이름, 사진 입력. 넣지 않은 항목은 원래 값으로 들어감.<br>개수는 입력해줘야함")
     @PutMapping("")
     public ResponseEntity<ItemCreateResponse> changeItem(ItemUpdateRequest request)  throws IOException  {
