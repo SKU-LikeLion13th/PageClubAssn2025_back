@@ -89,9 +89,20 @@ jobs:
       - name: Execute remote commands
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
-          sudo fuser -k 8081/tcp;
+          PID=\$(sudo lsof -ti :8081);
+          if [ ! -z \"\$PID\" ]; then
+            echo 'Killing process running on 8081...';
+            sudo kill -9 \$PID;
+            sleep 3;
+          fi;
           cd /home/ubuntu/page;
-          nohup java -jar *-SNAPSHOT.jar > app.log 2>&1 &"
+          nohup java -jar *-SNAPSHOT.jar > app.log 2>&1 &
+          sleep 3;
+          if ! sudo lsof -i :8081 -sTCP:LISTEN -t; then
+            echo 'Application failed to start!';
+            exit 1;
+          fi;"
+
   dependency-submission:
 
     runs-on: ubuntu-latest
