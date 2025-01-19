@@ -41,7 +41,7 @@ public class JoinClubController {
 
     // iconclub 변경
     @PostMapping("/changeIconClub")
-    @Operation(summary = "대표 동아리 변경", description = "header:jwt, body:동아리명 필요",
+    @Operation(summary = "(주희) 대표 동아리 변경", description = "header:jwt, body:동아리Id 필요",
             responses = {@ApiResponse(responseCode="200", description="변경 성공"),
                     @ApiResponse(responseCode = "403", description = "권한 없음")
             })
