@@ -89,7 +89,7 @@ jobs:
       - name: Execute remote commands
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8081/tcp"
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd /home/ubuntu/page && sudo nohup java -jar *-SNAPSHOT.jar > app.log 2>&1 &"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd /home/ubuntu/page && nohup java -jar *-SNAPSHOT.jar > app.log 2>&1 &"
   dependency-submission:
 
     runs-on: ubuntu-latest
