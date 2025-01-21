@@ -24,7 +24,7 @@ public class ItemRentController {
     private final ItemRentService itemRentService;
     private final JwtUtility jwtUtility;
 
-    @Operation(summary = "물품 대여창 목록 출력용", description = "대여중, 예약중 개수를 포함하여 물품의 목록을 조회")
+    @Operation(summary = "물품 대여창 목록 출력용(가나다 정렬) ", description = "대여중, 예약중 개수를 포함하여 물품의 목록을 조회")
     @GetMapping("/list")
     public ResponseEntity<List<RestItemListDTO>> restItemList() {
         return ResponseEntity.status(HttpStatus.OK).body(itemRentService.getrestItemList());
