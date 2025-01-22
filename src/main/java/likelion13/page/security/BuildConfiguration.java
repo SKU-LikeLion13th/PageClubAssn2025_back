@@ -21,6 +21,6 @@ public class BuildConfiguration {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .addServersItem(new Server().url("https://puzzle.likelion12.kro.kr/").description("Default Server URL"));
+                .addServersItem(new Server().url("https://page.sku-sku.com/").description("Default Server URL"));
     }
 }
