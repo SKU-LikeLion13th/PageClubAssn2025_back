@@ -26,7 +26,7 @@ public class ItemController {
     private final ItemService itemService;
 
     // 물품 추가
-    @Operation(summary = "관리자가 대여 물품 추가하는 API", description = "물품명, 물품 개수, 물품 이미지 삽입")
+    @Operation(summary = "관리자가 대여 물품 추가하는 API", description = "body에 form-data로 물품명, 물품 개수, 물품 이미지 필요")
     @PostMapping("") //, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addItem(ItemCreateRequest reqest)  throws IOException {
 
@@ -35,22 +35,22 @@ public class ItemController {
     }
 
     // 물품 수정(이미지 안바꾸고 싶으면 안넣으면 됨)
-    @Operation(summary = "관리자가 대여 물품 수정하는 API1",
-            description = "물품id, 수정하고자하는 이름, 사진 입력. 넣지 않은 항목은 원래 값으로 들어감.<br>개수는 입력해줘야함")
+    @Operation(summary = "관리자가 대여 물품 수정하는 API",
+            description = "body에 form-data로 물품id, 수정하고자하는 이름, 사진 필요. 넣지 않은 항목은 원래 값으로 들어감.<br>개수는 입력해줘야함")
     @PutMapping("")
     public ResponseEntity<ItemCreateResponse> changeItem(ItemUpdateRequest request)  throws IOException  {
         Item item = itemService.changeItem(request.getItemId(), request.getName(), request.getCount(), request.getImage());
         return ResponseEntity.status(HttpStatus.CREATED).body(new ItemCreateResponse(item.getName(), item.getCount(), item.arrayToImage()));
     }
 
-    @Operation(summary = "물품 1개 정보 확인하는 API", description = "물품의 id입력")
+    @Operation(summary = "물품 1개 정보 확인하는 API", description = "경로 변수로 물품의 id 필요")
     @GetMapping("/{itemId}")
     public ResponseEntity<ItemCreateResponse> findOneItem(@PathVariable("itemId") Long itemId) {
         Item item = itemService.findById(itemId);
         return ResponseEntity.status(HttpStatus.OK).body(new ItemCreateResponse(item.getName(), item.getCount(), item.arrayToImage()));
     }
 
-    @Operation(summary = "관리자가 대여 물품 삭제하는 API", description = "물품의 id입력")
+    @Operation(summary = "관리자가 대여 물품 삭제하는 API", description = "경로 변수로 물품의 id 필요")
     @DeleteMapping("/{itemId}")
     public ResponseEntity<?> deleteItem(@PathVariable Long itemId) {
         itemService.delete(itemId);
