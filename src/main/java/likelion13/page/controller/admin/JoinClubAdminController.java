@@ -24,7 +24,7 @@ import static likelion13.page.DTO.MemberDTO.*;
 public class JoinClubAdminController {
     private final JoinClubService joinClubService;
 
-    @Operation(summary = "(민규) 동아리원 추가", description = "학번, 성함, 동아리명 필요")
+    @Operation(summary = "(민규) 동아리원 추가", description = "body에 json 형태로 학번, 성함, 동아리명 필요")
     @PostMapping("/add")
     public ResponseEntity<?> addNewMember(@RequestBody CreateJC request) {
         joinClubService.saveNewMember(request.getStudentId(), request.getClubName());
@@ -38,14 +38,14 @@ public class JoinClubAdminController {
 //        }
     }
 
-    @Operation(summary = "(민규) 동아리원 삭제", description = "학번, 동아리 id 필요")
+    @Operation(summary = "(민규) 동아리원 삭제", description = "body에 json 형태로 학번, 동아리 id 필요")
     @DeleteMapping("")
     public ResponseEntity<?> deleteClubMember(@RequestBody DeleteJC request) {
         joinClubService.deleteJoinClub(request.getMemberId(), request.getClubId());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @Operation(summary = "(민규) 동아리원 검색", description = "학번, 이름, 동아리를 검색하면 알맞은 동아리원 정보가 나옴")
+    @Operation(summary = "(민규) 동아리원 검색", description = "쿼리 파라미터로 학번 또는 이름 또는 동아리 필요<br>(학번 또는 이름 또는 동아리를 검색하면 알맞은 동아리원 정보가 나옴)")
     @GetMapping("/search")
     public ResponseEntity<List<CreateJC>> CMManageSearch(@RequestParam String keyword) {
 //        if (keyword == null || keyword.trim().isEmpty()) {
@@ -73,7 +73,7 @@ public class JoinClubAdminController {
     }
 
     // 특정 멤버의 가입 동아리, 미가입 동아리 리스트
-    @Operation(summary = "학생이 가입한 동아리와 가입하지 않은 동아리 반환 API", description = "")
+    @Operation(summary = "학생이 가입한 동아리와 가입하지 않은 동아리 반환 API", description = "body에 json 형태로 학번 필요")
     @PostMapping("/info")
     public ResponseEntity<MemberJoinedUnjoinedClubDTO> findJoinedClubUnJoinedClub(@RequestBody RequestMemberId request){
         return ResponseEntity.status(HttpStatus.OK).body(joinClubService.findJoinedClubUnJoinedClub(request.getStudentId()));
