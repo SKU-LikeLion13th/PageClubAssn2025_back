@@ -30,7 +30,7 @@ public class JoinClubController {
 
     // 아이콘을 포함해서 가입되어있는 모든 조인클럽 반환.
     @GetMapping("/joined-list")
-    @Operation(summary = "멤버가 가입되어있는 모든 동아리 조회", description = "발급된 jwt 필요",
+    @Operation(summary = "멤버가 가입되어있는 모든 동아리 조회", description = "Header에 Bearer token 필요",
             responses = {@ApiResponse(responseCode="200", description="정상 로그인"),
                     @ApiResponse(responseCode = "403", description = "권한 없음")
             })
@@ -41,7 +41,7 @@ public class JoinClubController {
 
     // iconclub 변경
     @PostMapping("/changeIconClub")
-    @Operation(summary = "(주희) 대표 동아리 변경", description = "header:jwt, body:동아리Id 필요",
+    @Operation(summary = "(주희) 대표 동아리 변경", description = "Header에 Bearer token 필요, body에 json 형태로 동아리Id 필요",
             responses = {@ApiResponse(responseCode="200", description="변경 성공"),
                     @ApiResponse(responseCode = "403", description = "권한 없음")
             })
