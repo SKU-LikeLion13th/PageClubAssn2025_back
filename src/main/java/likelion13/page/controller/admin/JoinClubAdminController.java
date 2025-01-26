@@ -38,10 +38,10 @@ public class JoinClubAdminController {
 //        }
     }
 
-    @Operation(summary = "(민규) 동아리원 삭제", description = "body에 json 형태로 학번, 동아리 id 필요")
+    @Operation(summary = "(민규) 동아리원 삭제", description = "body에 json 형태로 학번, 동아리 이름 필요")
     @DeleteMapping("")
     public ResponseEntity<?> deleteClubMember(@RequestBody DeleteJC request) {
-        joinClubService.deleteJoinClub(request.getMemberId(), request.getClubId());
+        joinClubService.deleteJoinClub(request.getMemberId(), request.getClubName());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
