@@ -37,8 +37,8 @@ public class JoinClubDTO {
         @Schema(description = "학번", example = "00000000")
         private String memberId;
 
-        @Schema(description = "동아리id", example = "1")
-        private Long clubId;
+        @Schema(description = "동아리 이름", example = "멋쟁이사자처럼")
+        private String clubName;
     }
 
     @Data
