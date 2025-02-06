@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static likelion13.page.DTO.ClubDTO.*;
+
 @Repository
 @RequiredArgsConstructor
 public class ClubRepository {
@@ -37,6 +39,10 @@ public class ClubRepository {
 
     public List<Club> findAll(){
         return em.createQuery("SELECT c FROM Club c", Club.class).getResultList();
+
+    }
+    public List<ClubNameAndIdReq> findAllClubNameAndId(){
+        return em.createQuery("SELECT new ClubNameAndIdReq(c.id, c.name) FROM Club c", ClubNameAndIdReq.class).getResultList();
     }
 
     // 동아리 삭제
