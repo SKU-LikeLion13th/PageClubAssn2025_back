@@ -81,7 +81,9 @@ public class ClubDTO {
 
     @Data
     @AllArgsConstructor
-    public static class ClubAllRequest {
+    public static class ClubNameAndIdReq {
+        @Schema(description = "동아리 id", example = "1")
+        private Long clubId;
         @Schema(description = "동아리 이름", example = "멋쟁이사자처럼")
         private String name;
     }

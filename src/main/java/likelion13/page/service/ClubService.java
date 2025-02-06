@@ -1,5 +1,6 @@
 package likelion13.page.service;
 
+import likelion13.page.DTO.ClubDTO;
 import likelion13.page.domain.Club;
 import likelion13.page.repository.ClubInterface;
 import likelion13.page.repository.ClubRepository;
@@ -39,8 +40,8 @@ public class ClubService {
         return clubRepository.findByName(clubName);
     }
 
-    public Long findIdByClubName(String clubName) {
-        return clubInterface.findIdByName(clubName);
+    public List<ClubDTO.ClubNameAndIdReq> findAllClubNameAndId() {
+        return clubRepository.findAllClubNameAndId();
     }
 
     // 동아리 삭제

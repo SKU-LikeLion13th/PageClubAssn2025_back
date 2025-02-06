@@ -3,6 +3,7 @@ package likelion13.page.controller.admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import likelion13.page.DTO.ClubDTO;
 import likelion13.page.DTO.ClubDTO.ClubCreateRequest;
 import likelion13.page.DTO.ClubDTO.ClubUpdateRequest;
 import likelion13.page.DTO.ClubDTO.ClubUpdateResponse;
@@ -74,6 +75,16 @@ public class ClubController {
     @GetMapping("/all")
     public ResponseEntity<List<Club>> findAllClubs() {//프론트측 요청으로 그냥 Club 객체 그대로 뽑기로 결정
         List<Club> clubs = clubService.findAll();
+
+        return ResponseEntity.status(HttpStatus.OK).body(clubs);
+    }
+
+    @Operation(summary = "(민규) 모든 동아리명, clubId 조회", description = "모든 동아리에 대한 동아리명, clubId 조회",
+            responses = {@ApiResponse(responseCode = "200", description = "조회를 하면 동아리의 아이디, 동아리명을 묶은 리스트가 출력."),
+                    @ApiResponse(responseCode = "", description = "")})
+    @GetMapping("/summary")
+    public ResponseEntity<List<ClubDTO.ClubNameAndIdReq>> findAllClubNameAndId() {
+        List<ClubDTO.ClubNameAndIdReq> clubs = clubService.findAllClubNameAndId();
 
         return ResponseEntity.status(HttpStatus.OK).body(clubs);
     }
