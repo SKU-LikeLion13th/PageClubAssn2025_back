@@ -17,7 +17,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ClubService {
     private final ClubRepository clubRepository;
-    private final ClubInterface clubInterface;
 
     // 동아리 추가
     @Transactional
