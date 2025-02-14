@@ -92,7 +92,7 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
             sudo fuser -k 8081/tcp &&
             cd /home/ubuntu/page &&
-            nohup java -jar *-SNAPSHOT.jar --spring.profiles.active=build &"
+            nohup java -jar *-SNAPSHOT.jar --spring.profiles.active=build > nohup.out 2>&1 &"
 
   dependency-submission:
 
