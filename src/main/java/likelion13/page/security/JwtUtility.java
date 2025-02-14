@@ -6,23 +6,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Service
 public class JwtUtility {
 
-//    @Value("${jwt.key}")
-//    private String secret = "askqwhrkjweagfjasdfasfdahsjkfhqlwkjfhbasdjkfhlqwkjefhbadskjfbalsdhfvbasdfasdfasdfasdfasdqmjhfvgjasd";
+    private final SecretKey secretKey; // JWT 서명에 사용되는 비밀 키 // 생성한 비밀 키의 타입이 SecretKey 타입
 
-    private final Key secret;
+    private static final long expirationTime = 1000 * 60 * 60; // 밀리초 단위 // JWT 만료 시간: 1시간
 
-    private static final long expirationTime = 1000 * 60 * 60; // 1시간
-
-    public JwtUtility() {
-        this.secret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-    }
+    // JWT 서명에 사용되는 비밀 키 생성
+    public JwtUtility(@Value("${jwt.base64Secret}") String base64Secret) { // @Value을 통해 application.yml에서 값 주입
+        byte[] decodedKey = Base64.getDecoder().decode(base64Secret); // Base64로 인코딩된 문자열을 디코딩하여 바이트 배열로 변환
+        this.secretKey = Keys.hmacShaKeyFor(decodedKey); // Keys.hmacShaKeyFor()는 JWT 서명을 위한 SecretKey 타입 비밀 키 객체를 반환
+    }                                                    // base64Secret에 64qkdlxm 이상이면 자동으로 HS512 알고리즘 사용
 
     // JWT 생성
     public String generateToken(String memberId) {
@@ -30,7 +31,7 @@ public class JwtUtility {
                 .setSubject(memberId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(secret)
+                .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -38,7 +39,7 @@ public class JwtUtility {
     public String getStudentId(String token) {
         // 토큰 파싱 및 클레임 반환
         return Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -48,7 +49,8 @@ public class JwtUtility {
     // JWT 유효성 검증
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret)
+            Jwts.parser()
+                    .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token);
             return true;
