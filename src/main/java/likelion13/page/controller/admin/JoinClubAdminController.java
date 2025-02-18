@@ -45,7 +45,7 @@ public class JoinClubAdminController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @Operation(summary = "(민규) 동아리원 검색", description = "쿼리 파라미터로 학번 또는 이름 또는 동아리 필요<br>(학번 또는 이름 또는 동아리를 검색하면 알맞은 동아리원 정보가 나옴)")
+    @Operation(summary = "(민규) 동아리원 검색", description = "쿼리 파라미터로 학번 또는 이름 또는 동아리 필요\n(학번 또는 이름 또는 동아리를 검색하면 알맞은 동아리원 정보가 나옴)")
     @GetMapping("/search")
     public ResponseEntity<List<CreateJC>> CMManageSearch(@RequestParam String keyword) {
 //        if (keyword == null || keyword.trim().isEmpty()) {
