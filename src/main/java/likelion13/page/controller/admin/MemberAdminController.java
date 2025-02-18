@@ -7,6 +7,10 @@ import likelion13.page.DTO.MemberDTO;
 import likelion13.page.DTO.MemberDTO.AddMemberResponse;
 import likelion13.page.DTO.MemberDTO.AddRequestMember;
 import likelion13.page.domain.Member;
+import likelion13.page.exception.ExistJoinClubException;
+import likelion13.page.exception.InvaildExcelFileException;
+import likelion13.page.exception.MemberExistException;
+import likelion13.page.exception.NotExistClubException;
 import likelion13.page.service.ExcelReaderService;
 import likelion13.page.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -56,18 +60,27 @@ public class MemberAdminController {
     }
 
     @Operation(summary = "(민규) Excel(.xlsx) 파일로 동아리원 추가", description = "body에 form-data로 Excel 파일 필요",
-            responses = {@ApiResponse(responseCode = "201", description = "등록 성공")})
+            responses = {@ApiResponse(responseCode = "201", description = "등록 성공"),
+                    @ApiResponse(responseCode = "400", description = "1. 멤버로 추가하는 과정에서 오류가 발생했습니다. 멋쟁이사자처럼 13기에 문의해 주세요!<br>2. 엑셀 파일의 데이터를 읽을 수 없습니다. 다시 한번 확인해 주세요!<br>3. 동아리 이름을 확인해 주세요!"),
+                    @ApiResponse(responseCode = "409", description = "각 동아리에 중복된 학번이 없는지 확인해 주세요!")})
     @PostMapping("/excel/upload")
     public ResponseEntity<?> uploadExcel(MultipartFile file) {
         try {
             // Excel 파일을 읽어 데이터를 반환
             excelReaderService.readExcel(file);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (Exception e) {
+        } catch (MemberExistException e) {
+            throw new InvaildExcelFileException(400, "멤버로 추가하는 과정에서 오류가 발생했습니다. 멋쟁이사자처럼 13기에 문의해 주세요!");
+        } catch (NotExistClubException e) {
+            throw new InvaildExcelFileException(400, "동아리 이름을 확인해 주세요!");
+        } catch (ExistJoinClubException e) {
+            throw new InvaildExcelFileException(409, "각 동아리에 중복된 학번이 없는지 확인해 주세요!");
+        }  catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new InvaildExcelFileException(400, "엑셀 파일의 데이터를 읽을 수 없습니다. 다시 한번 확인해 주세요!");
         }
     }
+
     @Operation(summary = "(민규) Role이 ROLE_MEMBER 전체 삭제", description = "",
             responses = {@ApiResponse(responseCode = "200", description = "삭제 성공")})
     @DeleteMapping("/all-member")
