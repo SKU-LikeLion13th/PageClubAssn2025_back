@@ -21,9 +21,10 @@ public class JwtUtility {
 
     // JWT 서명에 사용되는 비밀 키 생성
     public JwtUtility(@Value("${jwt.base64Secret}") String base64Secret) { // @Value을 통해 application.yml에서 값 주입
-        byte[] decodedKey = Base64.getDecoder().decode(base64Secret); // Base64로 인코딩된 문자열을 디코딩하여 바이트 배열로 변환
-        this.secretKey = Keys.hmacShaKeyFor(decodedKey); // Keys.hmacShaKeyFor()는 JWT 서명을 위한 SecretKey 타입 비밀 키 객체를 반환
-    }                                                    // base64Secret에 64qkdlxm 이상이면 자동으로 HS512 알고리즘 사용
+//        byte[] decodedKey = Base64.getDecoder().decode(base64Secret); // Base64로 인코딩된 문자열을 디코딩하여 바이트 배열로 변환
+//        this.secretKey = Keys.hmacShaKeyFor(decodedKey); // Keys.hmacShaKeyFor()는 JWT 서명을 위한 SecretKey 타입 비밀 키 객체를 반환
+        this.secretKey = Keys.hmacShaKeyFor(base64Secret.getBytes());
+    }                                                    // base64Secret에 64바이트 이상이면 자동으로 HS512 알고리즘 사용
 
     // JWT 생성
     public String generateToken(String memberId) {
