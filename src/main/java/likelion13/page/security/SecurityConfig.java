@@ -25,7 +25,8 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger UI와 API 문서화 경로에 대한 접근을 모든 사용자에게 허용
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/item-rent/**").hasRole("MEMBER")
-                        .anyRequest().permitAll()
+                        .requestMatchers("/login", "/agree", "/club-scores/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 // 간단한 테스트를 위해 csrf토큰 비활성화
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/**"))

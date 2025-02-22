@@ -32,11 +32,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 ////            System.out.println("2");
 //            return;
 //        }
-        if (!path.startsWith("/admin") && !path.startsWith("/item-rent")) {
-            // 경로가 /admin/** 또는 /item-rent/**가 아닌 경우, 필터를 통과시킴
-            filterChain.doFilter(request, response);
-            return;
-        }
+//        if (!path.startsWith("/admin") && !path.startsWith("/item-rent")) {
+//            // 경로가 /admin/** 또는 /item-rent/**가 아닌 경우, 필터를 통과시킴
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
 
         try {
             String token = jwtUtility.resolveToken(request);
