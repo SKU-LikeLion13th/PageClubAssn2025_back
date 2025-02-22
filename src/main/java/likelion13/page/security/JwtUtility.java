@@ -17,8 +17,7 @@ public class JwtUtility {
 
     private final SecretKey secretKey; // JWT 서명에 사용되는 비밀 키 // 생성한 비밀 키의 타입이 SecretKey 타입
 
-    private static final long expirationTime = 1000 * 60; // 밀리초 단위 // JWT 만료 시간: 1시간
-//    private static final long expirationTime = 1000 * 60 * 60; // 밀리초 단위 // JWT 만료 시간: 1시간
+    private static final long expirationTime = 1000 * 60 * 60; // 밀리초 단위 // JWT 만료 시간: 1시간
 
     // JWT 서명에 사용되는 비밀 키 생성
     public JwtUtility(@Value("${jwt.base64Secret}") String base64Secret) { // @Value을 통해 application.yml에서 값 주입
