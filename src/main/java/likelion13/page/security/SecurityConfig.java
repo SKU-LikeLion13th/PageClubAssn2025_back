@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())       // CORS 설정
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/login", "/agree", "/club-scores/**").permitAll() // Swagger UI와 API 문서화 경로에 대한 접근을 모든 사용자에게 허용
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger UI와 API 문서화 경로에 대한 접근을 모든 사용자에게 허용
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/item-rent/**").hasRole("MEMBER")
                         .anyRequest().authenticated()
