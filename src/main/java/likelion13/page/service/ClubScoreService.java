@@ -116,7 +116,7 @@ public class ClubScoreService {
                         cs.getQuarter(),
                         cs.getScore(),
                         cs.getClub().getName(),
-                        cs.getId()
+                        cs.getClub().getId()
                 ))
                 .collect(Collectors.toList());
     }
