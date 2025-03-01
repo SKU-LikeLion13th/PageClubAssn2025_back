@@ -37,7 +37,7 @@ public class ClubScoreAdminController {
     }
 
     @Operation(summary = "(준범)특정 동아리의 점수 데이터 삭제 ",
-            description = "club_id를 받아 해당 동아리의 점수 데이터를 삭제합니다. ****http://localhost:8080/admin/club-scores/delete/9 <= club_id는 요런식으로 넣어주면 됨****",
+            description = "club_id를 받아 해당 동아리의 점수 데이터를 삭제합니다. ***http://localhost:8080/admin/club-scores/delete/9 <= club_id는 요런식으로 넣어주면 됨***",
             responses = {
                     @ApiResponse(responseCode = "200", description = "정상적으로 삭제됨(데이터 없어도 에러안나게 다 통과시킬꺼임)")
             })
