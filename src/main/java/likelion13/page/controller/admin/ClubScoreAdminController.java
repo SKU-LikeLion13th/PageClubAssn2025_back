@@ -35,4 +35,15 @@ public class ClubScoreAdminController {
         clubScoreService.saveOrUpdateScores(requestDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = "(준범)특정 동아리의 점수 데이터 삭제",
+            description = "club_id를 받아 해당 동아리의 점수 데이터를 삭제합니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "정상적으로 삭제됨")
+            })
+    @DeleteMapping("/delete/{clubId}")
+    public ResponseEntity<Void> deleteClubScore(@PathVariable Long clubId) {
+        clubScoreService.deleteClubScore(clubId);
+        return ResponseEntity.ok().build();
+    }
 }
