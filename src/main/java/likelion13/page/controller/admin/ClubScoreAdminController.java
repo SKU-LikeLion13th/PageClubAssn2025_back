@@ -24,11 +24,11 @@ public class ClubScoreAdminController {
     private final ClubScoreService clubScoreService;
 
     // 점수 저장
-    @Operation(summary = "(준범) 점수 추가 또는 업데이트",
-            description = "body에 json 형태로 순위를 기준으로 점수를 추가하거나 업데이트.",
+    @Operation(summary = "(준범)동아리 점수 추가 또는 업데이트",
+            description = "body에 json 형태로 동아리 이름과 점수를 포함하여 전송하면, 기존 데이터가 있으면 업데이트, 없으면 새로운 데이터를 추가합니다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "정상적으로 저장/업데이트 완료"),
-                    @ApiResponse(responseCode = "400", description = "잘못된 요청 (예: 없는 동아리, 중복 순위)")
+                    @ApiResponse(responseCode = "400", description = "잘못된 요청 (예: 없는 동아리)")
             })
     @PostMapping("/add-or-update")
     public ResponseEntity<Void> saveOrUpdateScores(@RequestBody List<ClubScoreRequestDTO> requestDTO) {
