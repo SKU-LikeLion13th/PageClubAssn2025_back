@@ -80,12 +80,15 @@ public class ClubScoreService {
             }
         }
 
+
         // 동아리 점수를 순회하며 매핑된 순위를 할당하여 DTO 리스트 생성
         List<ClubScoreResponseDTO> rankedScores = new ArrayList<>();
         int lastRankIncluded = 0; // 현재 포함된 마지막 순위
 
         for (ClubScore cs : scores) {
             int clubRank = scoreToRank.get(cs.getScore());
+
+            if (clubRank > 3) break;
 
             rankedScores.add(new ClubScoreResponseDTO(
                     cs.getQuarter(),
@@ -101,11 +104,27 @@ public class ClubScoreService {
         return rankedScores;
     }
 
+    //점수데이터 내림차순으로 넘겨주기(관리자페이지에서는 이거 쓰는게 나을듯?)
+    public List<ClubScoreAdminResponseDTO> getAllScores() {
+        List<ClubScore> scores = clubScoreRepository.findAllByOrderByScoreDesc();
+        if (scores.isEmpty()) {
+            throw new ClubScoreNotFoundException("점수 데이터가 존재하지 않습니다.");
+        }
+
+        return scores.stream()
+                .map(cs -> new ClubScoreAdminResponseDTO(
+                        cs.getQuarter(),
+                        cs.getScore(),
+                        cs.getClub().getName(),
+                        cs.getId()
+                ))
+                .collect(Collectors.toList());
+    }
+
     // club_id로 찾아서 삭제하기
     @Transactional
     public void deleteClubScore(Long clubId) {
         clubScoreRepository.findByClub_Id(clubId)
                 .ifPresent(clubScoreRepository::delete);
     }
-
 }

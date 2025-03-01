@@ -16,9 +16,18 @@ public class ClubScoreDTO {
     @AllArgsConstructor
     public static class ClubScoreResponseDTO {
         private String quarter;
-        private int ranking; // 백엔드에서 계산 후 반환
+        private int ranking;
         private int score;
         private String clubName;
         private byte[] logo;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class ClubScoreAdminResponseDTO {
+        private String quarter;
+        private int score;
+        private String clubName;
+        private Long clubId;
     }
 }
