@@ -35,4 +35,28 @@ public class ClubScoreAdminController {
         clubScoreService.saveOrUpdateScores(requestDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = "(준범)특정 동아리의 점수 데이터 삭제 ",
+            description = "club_id를 받아 해당 동아리의 점수 데이터를 삭제합니다. ****http://localhost:8080/admin/club-scores/delete/9 <= club_id는 요런식으로 넣어주면 됨****",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "정상적으로 삭제됨(데이터 없어도 에러안나게 다 통과시킬꺼임)")
+            })
+    @DeleteMapping("/delete/{clubId}")
+    public ResponseEntity<Void> deleteClubScore(@PathVariable Long clubId) {
+        clubScoreService.deleteClubScore(clubId);
+        return ResponseEntity.ok().build();
+    }
+
+    //내림차순 점수 조회
+    @Operation(summary = "모든 동아리 점수 조회(만약 관리자 페이지에서 조회하는거 사용한다면 이거 사용 권장)",
+            description = "모든 동아리 점수를 점수순으로 정렬하여 반환합니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "성공적으로 조회됨"),
+                    @ApiResponse(responseCode = "404", description = "점수 데이터가 존재하지 않음")
+            })
+    @GetMapping("/all")
+    public ResponseEntity<List<ClubScoreDTO.ClubScoreAdminResponseDTO>> getAllScores() {
+        List<ClubScoreDTO.ClubScoreAdminResponseDTO> responseDTO = clubScoreService.getAllScores();
+        return ResponseEntity.ok(responseDTO);
+    }
 }

@@ -16,6 +16,8 @@ public class ClubScore {
 
     private int score;
 
+    private String quarter;
+
     @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;

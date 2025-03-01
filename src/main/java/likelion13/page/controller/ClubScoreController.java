@@ -22,8 +22,8 @@ public class ClubScoreController {
     private final ClubScoreService clubScoreService;
 
     // 전체 점수 조회 (순위 포함)
-    @Operation(summary = "전체 동아리 점수 순위 조회",
-            description = "점수를 기준으로 순위를 계산하여 반환합니다.(1~3등까지만)",
+    @Operation(summary = "전체 동아리 점수 순위 조회(**주의사항** =>요놈 1~3등까지만 보여줌)",
+            description = "점수를 기준으로 순위를 계산하여 반환합니다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "성공적으로 조회됨"),
                     @ApiResponse(responseCode = "404", description = "점수 데이터가 존재하지 않음")

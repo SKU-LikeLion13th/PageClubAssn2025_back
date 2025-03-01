@@ -25,31 +25,31 @@ public class ClubScoreService {
     private final ClubScoreRepository clubScoreRepository;
 
     @Transactional
-    public void saveOrUpdateScores(List<ClubScoreRequestDTO> requestDTOs) {
-        for (ClubScoreRequestDTO dto : requestDTOs) {
+    public void saveOrUpdateScores(List<ClubScoreRequestDTO> requestDTO) {
+        for (ClubScoreRequestDTO dto : requestDTO) {
             Club club = validateAndFindClub(dto.getClubName());
 
             Optional<ClubScore> existingScoreOptional = clubScoreRepository.findByClub_Name(dto.getClubName());
 
             if (existingScoreOptional.isPresent()) {
-                // 기존 점수 업데이트
-                updateExistingScore(existingScoreOptional.get(), dto.getScore());
+                updateExistingScore(existingScoreOptional.get(), dto.getScore(), dto.getQuarter());
             } else {
-                // 새로운 점수 저장
                 saveNewScore(dto, club);
             }
         }
     }
 
-    // 특정 클럽의 기존 점수 찾기 (이제 분기 없음)
+    // 특정 클럽의 기존 점수 찾기
     private Club validateAndFindClub(String clubName) {
         return Optional.ofNullable(clubRepository.findByName(clubName))
                 .orElseThrow(() -> new NotExistClubException("동아리 이름을 확인해주세요.", HttpStatus.BAD_REQUEST));
     }
 
     // 기존 점수 업데이트
-    private void updateExistingScore(ClubScore existingScore, int score) {
+    private void updateExistingScore(ClubScore existingScore, int score, String quarter) {
         existingScore.setScore(score);
+        existingScore.setQuarter(quarter);
+
     }
 
     // 새로운 점수 저장
@@ -57,6 +57,7 @@ public class ClubScoreService {
         ClubScore clubScore = new ClubScore();
         clubScore.setScore(dto.getScore());
         clubScore.setClub(club);
+        clubScore.setQuarter(dto.getQuarter());
 
         clubScoreRepository.save(clubScore);
     }
@@ -79,6 +80,7 @@ public class ClubScoreService {
             }
         }
 
+
         // 동아리 점수를 순회하며 매핑된 순위를 할당하여 DTO 리스트 생성
         List<ClubScoreResponseDTO> rankedScores = new ArrayList<>();
         int lastRankIncluded = 0; // 현재 포함된 마지막 순위
@@ -86,9 +88,10 @@ public class ClubScoreService {
         for (ClubScore cs : scores) {
             int clubRank = scoreToRank.get(cs.getScore());
 
-            if (clubRank > 3) break; // 3등까지만 포함
+            if (clubRank > 3) break;
 
             rankedScores.add(new ClubScoreResponseDTO(
+                    cs.getQuarter(),
                     clubRank,
                     cs.getScore(),
                     cs.getClub().getName(),
@@ -101,5 +104,27 @@ public class ClubScoreService {
         return rankedScores;
     }
 
+    //점수데이터 내림차순으로 넘겨주기(관리자페이지에서는 이거 쓰는게 나을듯?)
+    public List<ClubScoreAdminResponseDTO> getAllScores() {
+        List<ClubScore> scores = clubScoreRepository.findAllByOrderByScoreDesc();
+        if (scores.isEmpty()) {
+            throw new ClubScoreNotFoundException("점수 데이터가 존재하지 않습니다.");
+        }
 
+        return scores.stream()
+                .map(cs -> new ClubScoreAdminResponseDTO(
+                        cs.getQuarter(),
+                        cs.getScore(),
+                        cs.getClub().getName(),
+                        cs.getId()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    // club_id로 찾아서 삭제하기
+    @Transactional
+    public void deleteClubScore(Long clubId) {
+        clubScoreRepository.findByClub_Id(clubId)
+                .ifPresent(clubScoreRepository::delete);
+    }
 }
