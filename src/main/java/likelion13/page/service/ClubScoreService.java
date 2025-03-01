@@ -105,7 +105,7 @@ public class ClubScoreService {
     @Transactional
     public void deleteClubScore(Long clubId) {
         clubScoreRepository.findByClub_Id(clubId)
-                .ifPresent(clubScoreRepository::delete); // ✅ 존재하면 삭제, 없으면 아무것도 안 함
+                .ifPresent(clubScoreRepository::delete);
     }
 
 }
