@@ -1,5 +1,6 @@
 package likelion13.page.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -15,6 +16,7 @@ public class DateCheck {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private LocalDate date;
 
     private LocalDate nextBizDay;
